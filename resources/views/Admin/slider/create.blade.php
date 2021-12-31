@@ -27,13 +27,14 @@
                                 </div>
                                 <div class="widget-content widget-content-area">
 
-                                    <form method="post" action="{{route('slider.store')}}" enctype="multipart/form-data">
+                                    <form method="post" action="{{route('admin.slider.store')}}" enctype="multipart/form-data">
                                         @csrf
                                         <div class="input-group mb-4">
                                             <div class="input-group-prepend">
                                                 <span class="input-group-text">Image</span>
                                             </div>
-                                            <input type="file" class="form-control" name="image" aria-label="With textarea">
+                                            <input type="file" class="form-control" name="image" id="imgInp" aria-label="With textarea">
+                                            <img id="blah" src="#" alt="your image" style="width: 100px; height: 100px;" />
                                         </div>
 
                                         <button type="submit" class="btn btn-primary">Add</button>
@@ -55,4 +56,12 @@
         <!--  END CONTENT AREA  -->
     </div>
     <!-- END MAIN CONTAINER -->
+<script>
+    imgInp.onchange = evt => {
+        const [file] = imgInp.files
+        if (file) {
+            blah.src = URL.createObjectURL(file)
+        }
+    }
+</script>
   @include('Admin.assets.footer')

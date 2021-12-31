@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="widget-content widget-content-area">
 
-                                    <form method="post" action="{{route('faq.update')}}">
+                                    <form method="post" action="{{route('admin.faq.update')}}">
                                         @csrf
                                         @method('PUT')
                                         <input type="hidden" name="faq_id" value="{{$faq->id}}">

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Interfaces\Admin\AdminSliderInterface;
 use App\Http\Requests\Slider\AddSliderRequest;
+use App\Http\Requests\Slider\DeleteSliderRequest;
 use App\Http\Traits\ImagesTrait;
 use App\Models\Slider;
 use Illuminate\Http\Request;
@@ -11,25 +13,40 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminSliderController extends Controller
 {
-    use ImagesTrait;
+    public $adminSliderInterface;
+    public function __construct(AdminSliderInterface $adminSliderInterface)
+    {
+        $this->adminSliderInterface = $adminSliderInterface;
+    }
+
+    public function index()
+    {
+        return $this->adminSliderInterface->index();
+    }
 
     public function create()
     {
-      return view('Admin.slider.create');
+      return $this->adminSliderInterface->create();
     }
 
     public function store(Request $request)
     {
-        $fileName = time() . '_slider.png';
+        return $this->adminSliderInterface->store($request);
+    }
 
-        $this->uploadImage($request->image, $fileName, 'slider');
+    public function delete(DeleteSliderRequest $request)
+    {
+        return $this->adminSliderInterface->delete($request);
+    }
 
-        Slider::create([
-            'image' => $fileName
-        ]);
+    public function edit($sliderId)
+    {
+        return $this->adminSliderInterface->edit($sliderId);
+    }
 
-        Alert::success('Success', 'Slider Was Created !');
-        return redirect()->back();
 
+    public function update(Request $request)
+    {
+        return $this->adminSliderInterface->update($request);
     }
 }

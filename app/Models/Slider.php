@@ -16,4 +16,9 @@ class Slider extends Model
             'image' => 'required'
         ];
     }
+
+    public function getImageAttribute($value)
+    {
+        return 'images/slider/' . $value;
+    }
 }

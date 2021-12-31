@@ -113,15 +113,17 @@
                 <div class="nicdark_space20"></div>
                 <div class="nicdark_divider left small"><span class="nicdark_bg_white nicdark_radius"></span></div>
                 <div class="nicdark_space20"></div>
-
-
-                <input class="nicdark_bg_greydark2 nicdark_radius nicdark_shadow white small subtitle" type="text" value="" placeholder="EMAIL">
-                <div class="nicdark_space20"></div>
-                <textarea rows="3" class="nicdark_bg_greydark2 nicdark_radius nicdark_shadow white small subtitle" placeholder="MESSAGE"></textarea>
-                <div class="nicdark_space20"></div>
-                <!--<input class="nicdark_btn nicdark_bg_green small nicdark_shadow nicdark_radius white nicdark_press" type="submit" value="SEND">-->
-                <a href="submit-message.html" class="nicdark_mpopup_ajax nicdark_btn nicdark_bg_green small nicdark_shadow nicdark_radius white nicdark_press">SEND</a>
-            </div>
+                <form action="{{route('contact.store')}}" method="post">
+                    @csrf
+                    <input class="nicdark_bg_greydark2 nicdark_radius nicdark_shadow white small subtitle" name="name" type="text" value="" placeholder="NAME">
+                    <div class="nicdark_space10"></div>
+                    <input class="nicdark_bg_greydark2 nicdark_radius nicdark_shadow white small subtitle" name="email" type="text" value="" placeholder="EMAIL">
+                    <div class="nicdark_space10"></div>
+                    <textarea rows="3" class="nicdark_bg_greydark2 nicdark_radius nicdark_shadow white small subtitle" name="message" placeholder="MESSAGE"></textarea>
+                    <div class="nicdark_space10"></div>
+                        <button type="submit" class="nicdark_btn nicdark_bg_green small nicdark_radius white nicdark_press">SEND</button>
+                </form>
+                </div>
         </div>
 
         <div class="nicdark_space50"></div>
@@ -310,6 +312,7 @@
     });
 </script>
 <!--custom js-->
+@include('sweetalert::alert')
 
 
 </body>

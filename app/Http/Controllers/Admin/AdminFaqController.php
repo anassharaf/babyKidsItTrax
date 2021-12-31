@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Interfaces\Admin\AdminFaqInterface;
 use App\Http\Requests\CreateFaqRequest;
 use App\Http\Requests\DeleteFaqRequest;
 use App\Http\Requests\UpdateFaqRequest;
@@ -12,68 +13,40 @@ use RealRashid\SweetAlert\Facades\Alert;
 
 class AdminFaqController extends Controller
 {
+    public $adminFaqInterface;
+
+    public function __construct(AdminFaqInterface $adminFaqInterface)
+    {
+        $this->adminFaqInterface = $adminFaqInterface;
+    }
 
     public function index()
     {
-        $faqs = Faq::get();
-        return view('Admin.faq.faqs',compact('faqs'));
+        return $this->adminFaqInterface->index();
     }
 
     public function create()
     {
-        return view('Admin.faq.create');
+        return $this->adminFaqInterface->create();
     }
 
-    /**
-     * @param CreateFaqRequest $request
-     * 1- store data.
-     * 2- return.
-     */
     public function store(CreateFaqRequest $request)
     {
-        Faq::create([
-            'question' => $request->question,
-            'answer' => $request->answer
-        ]);
-
-        Alert::success('Success', 'Faq Was Created !');
-
-        return redirect()->back();
+        return $this->adminFaqInterface->store($request);
     }
 
     public function delete(DeleteFaqRequest $request)
     {
-        Faq::where('id', $request->faq_id)->delete();
-
-        Alert::success('Success', 'Faq Was Deleted !');
-
-        return redirect()->back();
+        return $this->adminFaqInterface->delete($request);
     }
 
     public function edit($faqId)
     {
-        $faq = Faq::find($faqId);
-        return view('Admin.faq.edit', compact('faq'));
+        return $this->adminFaqInterface->edit($faqId);
     }
 
-    /**
-     * @param UpdateFaqRequest $request
-     * 1- get faq data.
-     * 2- update.
-     * 3-fire alert.
-     * 4- return
-     */
     public function update(UpdateFaqRequest $request)
     {
-
-        $faq = Faq::find($request->faq_id);
-        $faq->update([
-            'question' => $request->question,
-            'answer' => $request->answer
-        ]);
-
-        Alert::success('Success', 'Faq Was Updated !');
-        return redirect(route('faqs'));
-
+        return $this->adminFaqInterface->update($request);
     }
 }
